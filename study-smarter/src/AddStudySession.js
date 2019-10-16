@@ -3,7 +3,7 @@ import TimePicker from 'rc-time-picker';
 import moment from 'moment';
 import 'rc-time-picker/assets/index.css';
 
-const AddStudySession = () => {
+const AddStudySession = (props) => {
   const format = 'h:mm a';
   const now = moment().hour(0).minute(0);
 
@@ -14,8 +14,13 @@ const AddStudySession = () => {
         <label>
           Class Name:
           <select name="testName">
-            <option value="Psychology101">Psychology 101</option>
-            <option value="History101">History101</option>
+            {/* <option value="Psychology101">Psychology 101</option>
+            <option value="History101">History101</option> */}
+            {props.classes.map(classes => (
+              <option key={classes.classTitle} value={classes.classTitle}>
+                {classes.classTitle}
+              </option>
+            ))}
           </select>
         </label>
         <br></br>
