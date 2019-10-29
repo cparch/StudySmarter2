@@ -1,23 +1,18 @@
 import React from 'react';
-import TimePicker from 'rc-time-picker';
-import moment from 'moment';
 import 'rc-time-picker/assets/index.css';
+import TimeSelector from './TimeSelector';
 
 const AddStudySession = (props) => {
-  const format = 'h:mm a';
-  const now = moment().hour(0).minute(0);
-
   return(
     <div>
-      <p>Add Study Session</p>
-      <form>
+      <p>Add Study Session!!!!!!</p>
+      <form onSubmit={props.addStudySessionSubmitBtnHandler}>
         <label>
           Class Name:
-          <select name="testName">
-            {/* <option value="Psychology101">Psychology 101</option>
-            <option value="History101">History101</option> */}
-            {props.classes.map(classes => (
-              <option key={classes.classTitle} value={classes.classTitle}>
+
+          <select name="selectedClass" onChange={props.FormHandler}> 
+            {props.classes.map((classes, idx) => (
+              <option  key={classes.classTitle} value={idx}>
                 {classes.classTitle}
               </option>
             ))}
@@ -28,9 +23,12 @@ const AddStudySession = (props) => {
 
         <label>
           Test Name:
-          <select name="testName">
-            <option value="test1">test1</option>
-            <option value="test2">test2</option>
+          <select name="selectedTest" onChange={props.FormHandler}> 
+              {props.tests.map((test, idx) => (
+                <option key={test.testName} value={idx}>
+                  {test.testName}
+                </option>
+              ))}
           </select>
         </label>
         <br></br>
@@ -38,14 +36,9 @@ const AddStudySession = (props) => {
 
         <label>
           Start:
-          <TimePicker 
-            showSecond={false}
-            defaultValue={now}
-            className="xxx"
-            // onChange={onChange}
-            format={format}
-            use12Hours
-            inputReadOnly
+          <TimeSelector
+            TimeValue={props.startTimeValue}
+            timeHandler={props.handleStudySessionStartTime}
           />
         </label>
 
@@ -54,14 +47,9 @@ const AddStudySession = (props) => {
 
         <label>
           End:
-          <TimePicker 
-            showSecond={false}
-            defaultValue={now}
-            className="xxx"
-            // onChange={onChange}
-            format={format}
-            use12Hours
-            inputReadOnly
+          <TimeSelector 
+            timeHandler={props.handleStudySessionEndTime}
+            TimeValue={props.endTimeValue}
           />
         </label>
 
@@ -69,11 +57,15 @@ const AddStudySession = (props) => {
         <br></br>
         <label>
           Notes:
-          <input
+          <input 
+            onChange={props.FormHandler}
             name="notes"
             type="text" 
           />
         </label>
+        <br></br>
+        <br></br>
+        <input type="submit" value="Submit" />
       </form>
     </div>
   )
